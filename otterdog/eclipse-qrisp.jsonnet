@@ -2,7 +2,8 @@ local orgs = import 'vendor/otterdog-defaults/otterdog-defaults.libsonnet';
 
 orgs.newOrg('eclipse-qrisp') {
   settings+: {
-    description: "",
+    blog: "https://projects.eclipse.org/projects/technology.qrisp",
+    description: "Qrisp is a high-level programming language for working with quantum computers.",
     name: "Eclipse Qrisp project",
     web_commit_signoff_required: false,
     workflows+: {
