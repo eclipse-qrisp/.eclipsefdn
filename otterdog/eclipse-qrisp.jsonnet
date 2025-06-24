@@ -16,7 +16,7 @@ orgs.newOrg('technology.qrisp', 'eclipse-qrisp') {
       allow_update_branch: false,
       delete_branch_on_merge: false,
       dependabot_alerts_enabled: false,
-      description: "Qrisp - a framework for high-level programming of Quantum computers",
+      description: "Qrisp - The next generation of quantum algorithm development",
       homepage: "https://www.qrisp.eu",
       topics+: [
         "quantum-algorithms",
