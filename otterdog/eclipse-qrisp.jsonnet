@@ -26,6 +26,16 @@ orgs.newOrg('technology.qrisp', 'eclipse-qrisp') {
       ],
       web_commit_signoff_required: false,
 
+      has_discussions: true,
+      
+      _environments+: [
+        orgs.newEnvironment('copilot') {
+          deployment_branch_policy: "all",
+          prevent_self_review: false,
+          wait_timer: 0,
+        }
+      ],
+
       _branch_protection_rules+: [
         orgs.newBranchProtectionRule('main') {
           allows_deletions: false,
