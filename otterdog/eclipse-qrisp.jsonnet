@@ -12,6 +12,7 @@ orgs.newOrg('technology.qrisp', 'eclipse-qrisp') {
   },
   _repositories+:: [
     orgs.newRepo('Qrisp') {
+      has_discussions: true,
       allow_merge_commit: true,
       allow_update_branch: false,
       delete_branch_on_merge: false,
@@ -25,10 +26,8 @@ orgs.newOrg('technology.qrisp', 'eclipse-qrisp') {
         "quantum-programming-language"
       ],
       web_commit_signoff_required: false,
-
-      has_discussions: true,
       
-      _environments+: [
+      environments+: [
         orgs.newEnvironment('copilot') {
           deployment_branch_policy: "all",
           prevent_self_review: false,
@@ -36,20 +35,17 @@ orgs.newOrg('technology.qrisp', 'eclipse-qrisp') {
         }
       ],
 
-      _branch_protection_rules+: [
+      branch_protection_rules+: [
         orgs.newBranchProtectionRule('main') {
+          requires_pull_request: true,
+          required_approving_review_count: 1,
+          dismisses_stale_reviews: true,
+          requires_code_owner_reviews: false,
+          require_last_push_approval: false,
+          is_admin_enforced: true,
+          requires_linear_history: false,
           allows_deletions: false,
           allows_force_pushes: false,
-          blocks_creations: false,
-          enforce_admins: true,
-          require_linear_history: false,
-          require_pull_request+: {
-            required_approving_review_count: 1,
-            dismiss_stale_reviews_on_push: false,
-            require_code_owner_reviews: false,
-            require_last_push_approval: false,
-          },
-          restrict_pushes+: [],
         },
       ],
     },
