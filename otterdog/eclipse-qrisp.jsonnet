@@ -25,6 +25,23 @@ orgs.newOrg('technology.qrisp', 'eclipse-qrisp') {
         "quantum-programming-language"
       ],
       web_commit_signoff_required: false,
+
+      _branch_protection_rules+: [
+        orgs.newBranchProtectionRule('main') {
+          allows_deletions: false,
+          allows_force_pushes: false,
+          blocks_creations: false,
+          enforce_admins: true,
+          require_linear_history: false,
+          require_pull_request+: {
+            required_approving_review_count: 1,
+            dismiss_stale_reviews_on_push: false,
+            require_code_owner_reviews: false,
+            require_last_push_approval: false,
+          },
+          restrict_pushes+: [],
+        },
+      ],
     },
   ],
 } + {
