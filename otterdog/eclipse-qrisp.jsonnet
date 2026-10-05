@@ -1,5 +1,37 @@
 local orgs = import 'vendor/otterdog-defaults/otterdog-defaults.libsonnet';
 
+# settings shared by all code repositories of the project
+local commonRepoSettings = {
+  has_discussions: true,
+  allow_merge_commit: true,
+  allow_update_branch: false,
+  delete_branch_on_merge: false,
+  dependabot_alerts_enabled: false,
+  web_commit_signoff_required: false,
+
+  environments+: [
+    orgs.newEnvironment('copilot') {
+      deployment_branch_policy: "all",
+      prevent_self_review: false,
+      wait_timer: 0,
+    },
+  ],
+
+  branch_protection_rules+: [
+    orgs.newBranchProtectionRule('main') {
+      requires_pull_request: true,
+      required_approving_review_count: 1,
+      dismisses_stale_reviews: true,
+      requires_code_owner_reviews: false,
+      require_last_push_approval: false,
+      is_admin_enforced: true,
+      requires_linear_history: false,
+      allows_deletions: false,
+      allows_force_pushes: false,
+    },
+  ],
+};
+
 orgs.newOrg('technology.qrisp', 'eclipse-qrisp') {
   settings+: {
     blog: "https://projects.eclipse.org/projects/technology.qrisp",
@@ -11,12 +43,7 @@ orgs.newOrg('technology.qrisp', 'eclipse-qrisp') {
     },
   },
   _repositories+:: [
-    orgs.newRepo('Qrisp') {
-      has_discussions: true,
-      allow_merge_commit: true,
-      allow_update_branch: false,
-      delete_branch_on_merge: false,
-      dependabot_alerts_enabled: false,
+    orgs.newRepo('Qrisp') + commonRepoSettings {
       description: "Qrisp - The next generation of quantum algorithm development",
       homepage: "https://www.qrisp.eu",
       topics+: [
@@ -25,28 +52,13 @@ orgs.newOrg('technology.qrisp', 'eclipse-qrisp') {
         "quantum-computing",
         "quantum-programming-language"
       ],
-      web_commit_signoff_required: false,
-      
-      environments+: [
-        orgs.newEnvironment('copilot') {
-          deployment_branch_policy: "all",
-          prevent_self_review: false,
-          wait_timer: 0,
-        }
-      ],
-
-      branch_protection_rules+: [
-        orgs.newBranchProtectionRule('main') {
-          requires_pull_request: true,
-          required_approving_review_count: 1,
-          dismisses_stale_reviews: true,
-          requires_code_owner_reviews: false,
-          require_last_push_approval: false,
-          is_admin_enforced: true,
-          requires_linear_history: false,
-          allows_deletions: false,
-          allows_force_pushes: false,
-        },
+    },
+    orgs.newRepo('qrisp-cudaq') + commonRepoSettings {
+      description: "Integration of Eclipse Qrisp with CUDA-Q",
+      topics+: [
+        "quantum-algorithms",
+        "quantum-computing",
+        "quantum-programming-language"
       ],
     },
   ],
